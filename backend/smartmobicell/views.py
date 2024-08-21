@@ -21,7 +21,7 @@ class HomePageView(APIView):
     authentication_classes = []  # Disable authentication
     permission_classes = []       # Disable permission checks
 
-    # Define mappings between section names and models/serializers
+    
     section_mapping = {
         'products': (Product, ProductSerializer),
         'displayproducts': (DisplayProduct, DisplayProductSerializer),
@@ -37,7 +37,7 @@ class HomePageView(APIView):
 
         model, serializer_class = self.section_mapping[section]
 
-        # Handle the case when an id is provided
+        
         if id is not None:
             if section == 'accessories':
                 product = get_object_or_404(model, id=id, is_accessory=True)
@@ -46,11 +46,11 @@ class HomePageView(APIView):
             serializer = serializer_class(product)
             return Response(serializer.data)
 
-        # Handle the case when no id is provided (list all products in the section)
-        query = request.GET.get('q', '')  # Get the search query from the request
+        
+        query = request.GET.get('q', '')  
         products = model.objects.all()
 
-        # Apply filters based on the section and query
+
         if section == 'accessories':
             products = products.filter(is_accessory=True)
         if query:
@@ -60,9 +60,9 @@ class HomePageView(APIView):
                     Q(brand__icontains=query) |
                     Q(category__name__icontains=query)
                 )
-            # Add additional filtering logic for other sections if needed
 
-        # Special handling for specific sections
+
+
         if section == 'offerproduct':
             product = products.order_by('-created_at').first()  # Get the latest product
             serializer = serializer_class(product) if product else serializer_class([])  # Serialize if item exists
