@@ -67,6 +67,7 @@ const All = () => {
                 {productList.map((product) => (
                     <AllProduct
                         key={product.id}
+                        id = {product.id}
                         name={product.name}
                         image={`http://localhost:8000${product.image}`}
                         price={product.price}

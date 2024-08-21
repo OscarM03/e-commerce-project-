@@ -1,12 +1,31 @@
+import { useEffect, useState } from "react"
 import Button from "../components/Button"
-import { RedmiOffer } from "../utils"
+import api from "../api";
 
 
 const SpecialOffer = () => {
+    const [offerProduct, setOfferProduct] = useState(null);
+    const section = 'offerproduct';
+
+    useEffect(() => {
+        const fetchOfferProduct = async () => {
+            try {
+                const response = await api.get('api/offerproduct/');
+                const data = response.data;
+                setOfferProduct(data);
+            } catch(error) {
+                console.error('Fetching offer list products error:', error)
+            }
+        };
+        fetchOfferProduct()
+    }, []);
+    if (!offerProduct) {
+        return <div>...</div>
+    }
     return (
         <section className="my-10">
             <h1 className="text-[28px] ml-10 font-poppins
-            font-medium">Special <span className="text-thick-orange">Offer</span> - Redmi 12</h1>
+            font-medium">Special <span className="text-thick-orange">Offer</span> - {offerProduct.name}</h1>
             <div className="flex items-center justify-center gap-[150px] bg-display-bg mx-10
             rounded-lg shadow-md font-medium max-md:flex-col max-lg:gap-[100px]">
 
@@ -21,31 +40,24 @@ const SpecialOffer = () => {
                     <h1 className="text-xl pt-2">
                         only while stocks last!
                     </h1>
-                    <p className="pt-1 pb-4 text-slate-gray">Valid till August 10</p>
+                    <p className="pt-1 pb-4 text-slate-gray">{offerProduct.period}</p>
                     <Button label="Order Now"
                     href="/mycart"
                     />
                 </div>
-                <div>
-                    <a href="/product">
-                    <img src={RedmiOffer}
+                <div className="flex  flex-col items-center">
+                    <a href={`/offerproduct/${offerProduct.id}`}>
+                    <img src={`http://localhost:8000${offerProduct.image}`}
                         alt=""
                         width={300}
                         className=""
                         />
                     </a>
-                    <div className="flex gap-5 font-medium max-lg:gap-3 max-md:gap-5">
-                        <div className="">
-                                <p className="">4GB | 128GB</p>
-                                <p className=" text-thick-orange">Ksh. 14,999</p>
-                        </div>
-                        <div className="">
-                                <p className="">8GB | 128GB</p>
-                                <p className=" text-thick-orange">Ksh. 17,999</p>
-                        </div>
-                        <div className="">
-                                <p className="">8GB | 256GB</p>
-                                <p className=" text-thick-orange">Ksh. 19,999</p>
+                    <div className="flex gap-5 font-medium max-lg:gap-3 max-md:gap-5
+                    ">
+                        <div className="flex  flex-col items-center ">
+                                <p className="">{offerProduct.description}</p>
+                                <p className=" text-thick-orange">Ksh {offerProduct.price}</p>
                         </div>
                     </div>
                 </div>

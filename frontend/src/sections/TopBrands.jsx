@@ -1,4 +1,3 @@
-import { LatestProductsList } from "../constants";
 import { IphoneLogo, SamsungLogo } from "../utils";
 import { useState, useEffect } from "react";
 import TopBrandsCard from "../components/TopBrandsCard";
@@ -86,6 +85,7 @@ const TopBrands = () => {
                 {appleProducts.slice(0, columns + columns).map((product) => (
                     <TopBrandsCard
                     key={product.id}
+                    id={product.id}
                     name={product.name} 
                     image={`http://localhost:8000${product.image}`}
                     price={product.price}
@@ -109,6 +109,7 @@ const TopBrands = () => {
                 {samsungProducts.slice(0, columns + columns).map((product) => (
                     <TopBrandsCard
                     key={product.id}
+                    id={product.id}
                     name={product.name} 
                     image={`http://localhost:8000${product.image}`}
                     price={product.price}

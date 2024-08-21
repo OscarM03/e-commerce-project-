@@ -1,11 +1,26 @@
-import { AccessoriesList } from "../constants";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import PhoneCard from "../components/PhoneCard";
 import { LeftArrow, RightArrow } from "../utils";
+import api from "../api";
 
 
 const Accessories = () => {
     const scrollContainerRef = useRef(null);
+    const [accessoriesList, setAccessoriesList] = useState([])
+
+    useEffect(() => {
+        const fetchAccessoriesList = async () => {
+            try {
+                const response = await api.get('api/accessories/')
+                const data = response.data
+                setAccessoriesList(data)
+                console.log(data)
+            } catch(error) {
+                console.error('The accessory list cannot be loaded', error)
+            }
+        }
+        fetchAccessoriesList();
+    }, []);
 
     const scrollLeft = () => {
         if (scrollContainerRef.current) {
@@ -35,13 +50,14 @@ const Accessories = () => {
                 <div
                     ref={scrollContainerRef}
                     className="flex space-x-8 overflow-x-scroll scrollbar-hide whitespace-nowrap">
-                    {AccessoriesList.map((product) => (
+                    {accessoriesList.map((product) => (
                     <PhoneCard
-                    key={product.name}
+                    key={product.id}
+                    id={product.id}
                     name={product.name}
-                    image={product.img}
+                    image={`http://localhost:8000${product.image}`}
                     price={product.price}
-                    category={product.category}
+                    brand={product.brand}
                     discount={product.discount}
                     className=""
                     />

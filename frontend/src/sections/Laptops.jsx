@@ -1,10 +1,24 @@
 import { useEffect, useState } from "react"
 import LaptopsCard from "../components/LaptopsCard";
-import { LaptopList } from "../constants";
+import api from "../api";
 
 
 const Laptops = () => {
     const [columns, setColumns] = useState(3);
+    const [laptopsList, setLaptopsList] = useState([]);
+
+    useEffect(() => {
+        const fetchLaptopList = async () => {
+            try {
+                const response = await api.get('api/laptops/')
+                const data = response.data
+                setLaptopsList(data)
+            } catch(error) {
+                console.error('The laptop list cannot be loaded', error)
+            }
+        }
+        fetchLaptopList();
+    }, []);
 
     useEffect(() => {
         const handleResize = () => {
@@ -47,12 +61,13 @@ const Laptops = () => {
                     Laptops</h1></a>
             </div>
             <div className={`grid ${getGridColumnsClass()} gap-4 mx-10 mb-10`}>
-                {LaptopList.slice(0, columns + columns).map((item) => (
+                {laptopsList.slice(0, columns + columns).map((item) => (
                     <LaptopsCard 
-                    key={item.name}
+                    key={item.id}
+                    id = {item.id}
                     name={item.name}
-                    img={item.img}
-                    features={item.features}
+                    image={`http://localhost:8000${item.image}`}
+                    elements={item.elements}
                     storage={item.storage}
                     added_info={item.added_info}
                     price={item.price}

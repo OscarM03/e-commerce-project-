@@ -1,9 +1,48 @@
 
 import QuantitySelector from "../components/QuantitySelector"
 import { OppoA60, Whatsapp } from "../utils"
+import { useParams } from 'react-router-dom'
+import { useState, useEffect } from "react"
+import api from "../api"
 
 
 const ProductDetails = () => {
+    const {section, id} = useParams();
+    const [product, setProduct] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                console.log(section)
+                console.log(id)
+                const response = await api.get(`api/${section}/${id}/`)
+                const data = response.data
+                console.log(data)
+                
+                setProduct(data);
+            } catch(error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProduct()
+    }, [section, id])
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    if (!product) {
+        return <div>No product found</div>;
+    }
+    const { features } = product;
     return (
         <section>
             <div className="bg-display-bg mt-1">
@@ -12,7 +51,7 @@ const ProductDetails = () => {
             <div className="mx-10 flex mt-10 gap-24 max-lg:flex-col">
                 <div className="border px-20 pt-10 flex flex-col justify-center items-center rounded-md">
                     <div className="pb-4">
-                        <img src={OppoA60} 
+                        <img src={product.image} 
                         alt="" 
                         width={400}
                         className="max-sm:w-[400px]"
@@ -20,20 +59,20 @@ const ProductDetails = () => {
                     </div>
                     <div className="flex gap-2 pb-4">
                         <div className="border px-8 py-2 rounded-md">
-                            <img src={OppoA60} 
+                            <img src={product.thumbnail_1} 
                             alt="" 
                             width={100}
                             className="max-sm:w-[200]"
                             />
                         </div>
                         <div className="border px-8 py-2 rounded-md">
-                            <img src={OppoA60} 
+                            <img src={product.thumbnail_2} 
                             alt="" 
                             width={100}
                             />
                         </div>
                         <div className="border px-8 py-2 rounded-md">
-                            <img src={OppoA60} 
+                            <img src={product.thumbnail_3} 
                             alt="" 
                             width={100}
                             />
@@ -42,22 +81,18 @@ const ProductDetails = () => {
                 </div>
                 <div className="flex flex-col justify-center items-center">
                     <div>
-                        <h1 className="text-4xl pb-4 font-bold">Oppo A60 4G</h1>
-                        <h1 className="text-3xl text-thick-orange font-bold">Ksh 60,000 
-                            <span className="text-2xl line-through pl-2 font-normal">Ksh 65,000</span></h1>
+                        <h1 className="text-4xl pb-4 font-bold">{product.name}</h1>
+                        <h1 className="text-3xl text-thick-orange font-bold">Ksh {product.price} 
+                            <span className="text-2xl line-through pl-2 font-normal">Ksh {product.original}</span></h1>
                     </div>
                     <div className="pt-4">
-                        <h1 className="text-lg font-semibold pb-4">Oppo A60 4G key features:</h1>
+                        <h1 className="text-lg font-semibold pb-4">{product.name} key features:</h1>
                         <ul className="list-disc">
-                            <li className="text-slate-gray pb-1"><span className="font-bold">Battery:</span> 5000mAh</li>
-                            <li className="text-slate-gray pb-1"><span className="font-bold">Ram:</span> 8GB</li>
-                            <li className="text-slate-gray pb-1"><span className="font-bold">Internal Storage:</span> 256GB</li>
-                            <li className="text-slate-gray pb-1"><span className="font-bold">Main Camera:</span> 50MP + 10MP + 12MP</li>
-                            <li className="text-slate-gray pb-1"><span className="font-bold">Front Camera: 8MP</span></li>
-                            <li className="text-slate-gray pb-1"><span className="font-bold">Processor:</span> Qualcomm SM8550-AC Snapdragon 8 Gen 3 (4 nm)</li>
-                            <li className="text-slate-gray pb-1"><span className="font-bold">Display:</span> 7.6 inches Super AMOLED display </li>
-                            <li className="text-slate-gray pb-1"><span className="font-bold">Opearting System:</span> Android 14, One UI 6.1.1</li>
-                            <li className="text-slate-gray pb-1"><span className="font-bold">Colours:</span> Navy, Silver Shadow, Pink, Black, White</li>
+                            {features && Object.entries(features).map(([key, value]) => (
+                                <li key={key} className="text-slate-gray pb-1">
+                                    <span className="font-bold">{key}:</span> {value}
+                                </li>
+                            ))}
                         </ul>
                     </div>
                     <div className="pt-20  flex gap-16  justify-center">
