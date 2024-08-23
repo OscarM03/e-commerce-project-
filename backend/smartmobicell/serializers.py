@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Category, Products, OfferProduct, DisplayProduct
+from .models import Category, Product, OfferProduct, DisplayProduct, PickOfTheWeek, Laptop
 
 class UserSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(write_only=True)
@@ -27,15 +27,25 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Products
+        model = Product
         fields = '__all__'
 
-class ProductSerializer(serializers.ModelSerializer):
+class OfferProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = OfferProduct
         fields = '__all__'
 
-class ProductSerializer(serializers.ModelSerializer):
+class DisplayProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = DisplayProduct
+        fields = '__all__'
+
+class PickOfTheWeekSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PickOfTheWeek
+        fields = '__all__'
+
+class LaptopsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Laptop
         fields = '__all__'

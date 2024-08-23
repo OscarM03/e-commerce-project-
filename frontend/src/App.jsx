@@ -6,7 +6,6 @@ import SpecialOffer from "./sections/SpecialOffer"
 import TopBrands from "./sections/TopBrands"
 import Footer from "./sections/Footer"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ImmediateProducts from "./sections/ImmediateProducts"
 import PickOfTheWeek from "./sections/PickOfTheWeek"
 import Laptops from "./sections/Laptops"
 import Accessories from "./sections/Accessories"
@@ -17,11 +16,12 @@ import LoginPage from "./sections/LoginPage"
 import RegisterPage from "./sections/RegisterPage"
 import ProtectedRoute from "./components/ProtectedRoute"
 import MyCart from "./sections/MyCart"
+import DisplayProducts from "./sections/DisplayProducts"
 
 const Home = () => (
   <>
     <Hero />
-    <ImmediateProducts />
+    <DisplayProducts />
     <LatestProducts />
     <SpecialOffer />
     <PickOfTheWeek />
@@ -38,7 +38,7 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/all" element={<All />} />
-        <Route path="/product" element={<ProductDetails />} />
+        <Route path="/:section/:id" element={<ProductDetails />} />
         <Route path="/profile" 
         element={
           <ProtectedRoute>

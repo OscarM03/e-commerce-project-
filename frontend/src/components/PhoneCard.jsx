@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
 import { Cart } from "../utils";
 
-const PhoneCard = ({ category, image, name, price, discount }) => {
+const PhoneCard = ({ id, brand, image, name, price, discount }) => {
+    const section = 'products';
     return (
         <div
             className="flex flex-col p-2 gap-1 rounded-md
             hover:border border-thick-orange relative group flex-shrink-0"
             style={{ width: '170px' }}>
-            <a href="/product">
-                <div className="flex justify-center items-center">
+            <a href={`/${section}/${id}`}>
+                <div className="flex justify-center items-center h-[180px]">
                     <img src={image}
                         alt={name}
                         width={300} 
@@ -30,21 +31,22 @@ const PhoneCard = ({ category, image, name, price, discount }) => {
                 rounded-tl-md rounded-br-lg top-0">
                 <p className=" font-medium text-white">-{discount}%</p>
             </div>
-            <p className="text-slate-gray">{category}</p>
-            <a href="/product">
+            <p className="text-slate-gray">{brand}</p>
+            <a href={`/${section}/${id}`}>
                 <h1 className="text-lg  hover:text-lighter-yellow font-medium overflow-hidden text-ellipsis">
                     {name}
                 </h1>
             </a>
             <h3 className=" text-thick-orange text-md font-semibold whitespace-normal font-montserrat">
-                {price}
+                Ksh {price}
             </h3>
         </div>
     );
 };
 
 PhoneCard.propTypes = {
-    category: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    brand: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,

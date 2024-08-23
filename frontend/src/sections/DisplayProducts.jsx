@@ -1,9 +1,23 @@
 import { useState, useEffect } from "react";
-import ImmediateProductCard from "../components/ImmediateProductCard";
-import { newProductsList } from "../constants";
+import DisplayProductCard from "../components/DisplayProductCard";
+import api from "../api";
 
-const ImmediateProducts = () => {
+const DisplayProducts = () => {
     const [columns, setColumns] = useState(4);
+    const [displayProducts, setDisplayProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchDisplayProducts = async () => {
+            try {
+                const response = api.get('api/displayproducts/');
+                const data = (await response).data;
+                setDisplayProducts(data);
+            } catch(error) {
+                console.error('Error fetching product list', error)
+            }
+        };
+        fetchDisplayProducts()
+    }, []);
 
     useEffect(() => {
         const handleResize = () => {
@@ -41,12 +55,13 @@ const ImmediateProducts = () => {
 
     return (
         <section className={`grid ${getGridColumnsClass()} mt-[130px] max-md:mt-[30px] mx-10 gap-6`}>
-                {newProductsList.slice(0, columns).map((item) => (
-                    <ImmediateProductCard
-                        key={item.name}
+                {displayProducts.slice(0, columns).map((item) => (
+                    <DisplayProductCard
+                        key={item.id}
+                        id = {item.id}
                         brand={item.brand}
                         name={item.name}
-                        img={item.img}
+                        image={`http://localhost:8000${item.image}`}
                         discount={item.discount}
                         price={item.price}
                     />
@@ -55,4 +70,4 @@ const ImmediateProducts = () => {
     )
 }
 
-export default ImmediateProducts;
+export default DisplayProducts;

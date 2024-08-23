@@ -7,13 +7,13 @@ const Hero = () => {
         max-md:h-[70vh] h-[50vh] ">
             <div className="shadow-lg ml-10  rounded-md flex justify-center bg-display-bg
             max-md:hidden">
-                <ul className=" pt-4 ">
+                <ul className="pt-2">
                     {PhoneTypes.map((type) => (
-                        <li key={type} 
-                        className="text-lg font-poppins font-semibold pb-1"
-                        >
-                            { type }
+                        <a href={`/all?q=${encodeURIComponent(type)}`} key={type}>
+                            <li className="text-lg font-poppins font-semibold pb-1">
+                            {type}
                         </li>
+                        </a>
                     ))}
                 </ul>
             </div>

@@ -52,9 +52,10 @@ const Nav = () => {
                     </a>
                 </div>
                 <div className="max-sm:hidden">
-                    <form className="w-full flex items-center">
+                    <form action="/all" className="w-full flex items-center">
                         <input
                             type="search"
+                            name="q"
                             placeholder="What are you looking for..."
                             className="border-2 p-2 flex-grow max-w-[600px] rounded-l-full text-sm
                             border-thick-orange min-w-[480px] pl-5 max-lg:min-w-[300px] max-md:min-w-[200px]"
@@ -186,9 +187,11 @@ const Nav = () => {
             md:hidden absolute bg-display-bg mt-2 max-sm:ml-6">
                 <ul className="pt-2">
                     {PhoneTypes.map((type) => (
-                        <li key={type} className="text-lg font-poppins font-semibold pb-1">
+                        <a href={`/all?q=${encodeURIComponent(type)}`} key={type}>
+                            <li className="text-lg font-poppins font-semibold pb-1">
                             {type}
                         </li>
+                        </a>
                     ))}
                 </ul>
             </div>

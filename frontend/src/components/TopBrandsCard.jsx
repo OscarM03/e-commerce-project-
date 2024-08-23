@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import { Cart } from "../utils";
 
-const TopBrandsCard = ({ image, name, discount, price }) => {
+const TopBrandsCard = ({ id, image, name, discount, price }) => {
     return (
         <div
             className="flex p-2 gap-1 rounded-md relative group flex-shrink-0 border">
             <div className="flex justify-center items-center">
-                <a href="/product">
+                <a href={`/products/${id}`}>
                     <img src={image}
                         alt={name}
                         width={150}
@@ -28,13 +28,13 @@ const TopBrandsCard = ({ image, name, discount, price }) => {
                     top-0 rounded-tl-md rounded-br-lg">
                     <p className=" font-medium text-white">-{discount}%</p>
                 </div>
-                <a href="/product">
+                <a href={`/products/${id}`}>
                     <h1 className="text-xl hover:text-lighter-yellow font-medium overflow-hidden text-ellipsis">
                         {name}
                     </h1>
                 </a>
                 <h3 className="text-thick-orange text-md font-semibold whitespace-normal font-montserrat">
-                    {price}
+                    Ksh {price}
                 </h3>
             </div>
         </div>

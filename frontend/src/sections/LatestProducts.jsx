@@ -13,6 +13,7 @@ const LatestProducts = () => {
         const response = await api.get('api/products/');
         const data = response.data;
         setProductList(data);
+        console.log(data)
       } catch (error) {
         console.error('Error fetching product list', error)
       }
@@ -53,10 +54,11 @@ const LatestProducts = () => {
           {productList.map((product) => (
             <PhoneCard
               key={product.id}
+              id = {product.id}
               name={product.name}
               image={`http://localhost:8000${product.image}`}
               price={product.price}
-              category={product.brand}
+              brand={product.brand}
               discount={product.discount}
               className=""
             />

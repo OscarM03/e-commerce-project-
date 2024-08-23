@@ -14,20 +14,6 @@ const Brands = ({logo, name}) => {
                     <h1 className="text-2xl font-poppins font-bold">{name}</h1>
                 </div>
             </div>
-            {/* <div className="border  mx-10 rounded-md mt-10 bg-white
-            flex justify-center items-center gap-20">
-                <img src={IphoneHalf}
-                alt="iphone"
-                width={250}
-                />
-                <div className="flex justify-center items-center">
-                    <img src={IphoneLogo}
-                    alt="iphonelogo"
-                    width={100}
-                    />
-                    <h1 className="text-2xl font-poppins font-bold">Apple</h1>
-                </div>
-            </div> */}
             < PhoneBoxes LatestProductsList={LatestProductsList}/>
         </div>
     )

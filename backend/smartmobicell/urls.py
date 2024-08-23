@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import ProductList
+from .views import HomePageView
 
 urlpatterns = [
-    path('products/', ProductList.as_view(), name='product-list'),
+    path('<str:section>/', HomePageView.as_view(), name='home-page'),
+    path('<str:section>/<str:id>/', HomePageView.as_view(), name='home-page-detail'),
 ]
