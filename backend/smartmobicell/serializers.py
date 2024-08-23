@@ -1,6 +1,31 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Category, Product, OfferProduct, DisplayProduct, PickOfTheWeek, Laptop
+from .models import Profile, Product, OfferProduct, DisplayProduct, PickOfTheWeek, Laptop
+
+# class ProfileSerializer(serializers.ModelSerializer):
+#     username = serializers.CharField(source='user.username')
+#     email = serializers.EmailField(source='user.email')
+
+#     class Meta:
+#         model = Profile
+#         fields = ['username', 'email', 'name', 'profile_image', 'address', 'phone_number']
+
+#     # def update(self, instance, validated_data):
+#     #     user_data = validated_data.pop('user', {})
+
+#     #     user = instance.user
+#     #     username = user_data.get('username')
+#     #     email = user_data.get('email')
+
+#     #     if username:
+#     #         user.username = username
+#     #         user.save()
+#     #     if email:
+#     #         user.email = email
+#     #         user.save()
+
+#     #     return super().update(instance, validated_data)
+
 
 class UserSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(write_only=True)
@@ -13,6 +38,12 @@ class UserSerializer(serializers.ModelSerializer):
             "password": {"write_only": True},
             "confirm_password": {"write_only": True}
         }
+    def __init__(self, *args, **kwargs):
+        exclude_fields = kwargs.pop('exclude_fields', None)
+        super().__init__(*args, **kwargs)
+        if exclude_fields:
+            for field in exclude_fields:
+                self.fields.pop(field)
 
     def validate(self, data):
         if data.get("password") != data.get("confirm_password"):
@@ -49,3 +80,24 @@ class LaptopsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Laptop
         fields = '__all__'
+
+class ProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer(exclude_fields=['password', 'confirm_password'])
+    class Meta:
+        model = Profile
+        fields = ['user', 'firstname', 'lastname', 'profile_image', 'address', 'phone_number']
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user', {})
+        user = instance.user
+
+        for attr, value in user_data.items():
+            print(f"Updating {attr} to {value}")  # Debug statement
+            setattr(user, attr, value)
+        user.save()
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        return instance
