@@ -17,6 +17,7 @@ import RegisterPage from "./sections/RegisterPage"
 import ProtectedRoute from "./components/ProtectedRoute"
 import MyCart from "./sections/MyCart"
 import DisplayProducts from "./sections/DisplayProducts"
+import ProfileUpdate from "./components/ProfileUpdate"
 
 const Home = () => (
   <>
@@ -45,6 +46,7 @@ const App = () => {
             <Profile />
           </ProtectedRoute>
         } />
+        <Route path="/profile/update" element={<ProfileUpdate />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={< RegisterPage />} />
         <Route path="/mycart" element={<MyCart />} />
