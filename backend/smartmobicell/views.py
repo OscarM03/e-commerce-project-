@@ -1,21 +1,43 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models import Q
-from .models import Product, DisplayProduct, OfferProduct, PickOfTheWeek, Laptop
+from .models import Product, Profile, DisplayProduct, OfferProduct, PickOfTheWeek, Laptop
 from .serializers import (
     UserSerializer, ProductSerializer, 
     DisplayProductSerializer, OfferProductSerializer, 
-    PickOfTheWeekSerializer, LaptopsSerializer
+    PickOfTheWeekSerializer, LaptopsSerializer, ProfileSerializer
 )
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
+
+class UserProfileView(APIView):
+
+    def get(self, request):
+            user = request.user
+            profile = get_object_or_404(Profile, user=user)
+            serializer = ProfileSerializer(profile)
+            return Response(serializer.data)
+    
+    def put(self, request):
+        user = request.user
+        profile = get_object_or_404(Profile, user=user)
+
+        data = request.data
+        
+        serializer = ProfileSerializer(profile, data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+        
 
 class HomePageView(APIView):
     authentication_classes = []  # Disable authentication

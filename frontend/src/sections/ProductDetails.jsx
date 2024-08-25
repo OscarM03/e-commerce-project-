@@ -1,6 +1,6 @@
 
 import QuantitySelector from "../components/QuantitySelector"
-import { OppoA60, Whatsapp } from "../utils"
+import { Whatsapp } from "../utils"
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from "react"
 import api from "../api"

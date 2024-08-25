@@ -1,6 +1,6 @@
 import { useState } from "react";
 import api from "../api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
@@ -11,6 +11,8 @@ function Form({ route, method }) {
     const [confirmPassword, setConfirmPassword] = useState(""); // Only used for registration
     const [error, setError] = useState(""); // State for error handling
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const name = method === "login" ? "Login" : "Register";
     const alternateAction = method === "login" ? "/register" : "/login";
@@ -37,7 +39,7 @@ function Form({ route, method }) {
                 console.log('Login Response:', res.data);
                 Cookies.set(ACCESS_TOKEN, res.data.access, { path: '/', expires: 7 });
                 Cookies.set(REFRESH_TOKEN, res.data.refresh, { path: '/', expires: 7 });
-                    navigate("/");
+                    navigate(from);
             } else {
                 navigate("/login");
             }

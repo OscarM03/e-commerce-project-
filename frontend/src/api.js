@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios"
 import Cookies from "js-cookie";
 import { ACCESS_TOKEN } from "./constants";
 
@@ -30,4 +30,3 @@ api.interceptors.request.use(
 
 
 export default api;
-
