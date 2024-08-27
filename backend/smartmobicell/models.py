@@ -52,6 +52,10 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+class DisplayProduct(Product):
+    """DisplayProduct table"""
+    pass  # Inherits all fields from Product
+
 class OfferProduct(Product):
     """Special offer products table"""
     description = models.CharField(max_length=100)
@@ -72,11 +76,3 @@ class Laptop(Product):
     elements = models.CharField(max_length=100)
     storage = models.CharField(max_length=100)
     added_info = models.CharField(max_length=100)
-
-class DisplayProduct(Product):
-    """DisplayProduct table"""
-    product_ptr = models.OneToOneField(
-        Product, on_delete=models.CASCADE,
-        parent_link=True,
-        primary_key=True,
-    )
