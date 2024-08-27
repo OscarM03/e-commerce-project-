@@ -60,9 +60,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
-    #'paypal.standard.ipn',
-    'cart',
-    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -158,9 +155,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWS_CREDENTIALS = True
-
-#paypal data
-
-PAYPAL_CLIENT_ID = 'AdJSTiy4l_4aGGvvGusC_3qNY_zbcwL2m0OQE8WmE1phla-ZbLCtg_g8fyalm_jjqzz6EMGFopzCi7Sb'
-PAYPAL_CLIENT_SECRET = 'EIdcGiUK4AS8Hy9B8lRrExULflPnXT7tYkoUZzdR4vRk2OM304sivOra06kKD5enfiauXdV81EuCaWc1'
-PAYPAL_MODE = 'sandbox'  #change to live in prod
