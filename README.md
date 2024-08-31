@@ -20,20 +20,6 @@
     <li>Product search and filtering</li>
 </ul>
 
-<h2>Technologies Used</h2>
-<ul>
-    <li>✔️ Frontend: React, React Router, Tailwind CSS</li>
-    <li>✔️ Backend: Django</li>
-    <li>✔️ Authentication: JWT</li>
-    <li>✔️ Payments: (To be integrated)</li>
-</ul>
-
-<h2>Further Development Plans</h2>
-<ul>
-    <li>✔️ Further UI/UX development</li>
-    <li>✔️ Adding more features such as payment methods</li>
-</ul>
-
 <h2>API Endpoints</h2>
 
 <h3>User Profile</h3>
