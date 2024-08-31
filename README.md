@@ -20,6 +20,15 @@
     <li>Product search and filtering</li>
 </ul>
 
+<h2>Technologies Used</h2>
+<ul>
+    <li>Frontend: React, React Router, Tailwind CSS</li>
+    <li>Backend: Django</li>
+    <li>Authentication: JWT</li>
+    <li>Payments: (To be integrated)</li>
+</ul>
+
+
 <h2>API Endpoints</h2>
 
 <h3>User Profile</h3>
@@ -261,14 +270,6 @@
 }
         </code>
     </pre>
-</ul>
-
-<h2>Technologies Used</h2>
-<ul>
-    <li>Frontend: React, React Router, Tailwind CSS</li>
-    <li>Backend: Django</li>
-    <li>Authentication: JWT</li>
-    <li>Payments: (To be integrated)</li>
 </ul>
 
 <h2>Further Development Plans</h2>
